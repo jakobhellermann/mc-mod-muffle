@@ -5,7 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 
-public class SoundMufflerBlockEntity extends BlockEntity  {
+public class SoundMufflerBlockEntity extends BlockEntity {
 
     public SoundMufflerBlockEntity() {
         super(Muffle.SOUND_MUFFLER_ENTITY);

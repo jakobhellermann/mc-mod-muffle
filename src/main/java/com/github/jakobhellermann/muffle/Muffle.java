@@ -13,16 +13,16 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class Muffle implements ModInitializer {
-	public static final String MOD_ID = "muffle";
+    public static final String MOD_ID = "muffle";
 
-	public static final Block SOUND_MUFFLER = new SoundMuffler(Block.Settings.of(Material.WOOL).strength(0.8F, 1.0F));
-	public static BlockEntityType<SoundMufflerBlockEntity> SOUND_MUFFLER_ENTITY;
+    public static final Block SOUND_MUFFLER = new SoundMuffler(Block.Settings.of(Material.WOOL).strength(0.8F, 1.0F));
+    public static BlockEntityType<SoundMufflerBlockEntity> SOUND_MUFFLER_ENTITY;
 
-	@Override
-	public void onInitialize() {
-	    SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "sound_muffler"), BlockEntityType.Builder.create(SoundMufflerBlockEntity::new, SOUND_MUFFLER).build(null));
+    @Override
+    public void onInitialize() {
+        SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "sound_muffler"), BlockEntityType.Builder.create(SoundMufflerBlockEntity::new, SOUND_MUFFLER).build(null));
 
-		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "sound_muffler"), SOUND_MUFFLER);
-		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "sound_muffler"), new BlockItem(SOUND_MUFFLER, new Item.Settings().group(ItemGroup.MISC)));
-	}
+        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "sound_muffler"), SOUND_MUFFLER);
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "sound_muffler"), new BlockItem(SOUND_MUFFLER, new Item.Settings().group(ItemGroup.MISC)));
+    }
 }

@@ -12,10 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientWorld.class)
 public class ClientWorldSoundMixin {
-	@Environment(EnvType.CLIENT)
-	@Inject(at = @At("HEAD"), method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZ)V", cancellable = true)
-	private void playSound(double x, double y, double z, SoundEvent sound, SoundCategory category, float volume, float pitch, boolean bl, CallbackInfo ci) {
-		System.out.println("playSound invoked: "+ sound.getId().toString() + ", category: "+ category.getName());
-		ci.cancel();
-	}
+    @Environment(EnvType.CLIENT)
+    @Inject(at = @At("HEAD"), method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZ)V", cancellable = true)
+    private void playSound(double x, double y, double z, SoundEvent sound, SoundCategory category, float volume, float pitch, boolean bl, CallbackInfo ci) {
+        System.out.println("playSound invoked: " + sound.getId().toString() + ", category: " + category.getName());
+        ci.cancel();
+    }
 }

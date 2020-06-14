@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "muffle",
   "version": "${version}",
-
   "name": "Muffle",
   "description": "todo",
   "authors": [
@@ -12,10 +11,8 @@
     "homepage": "https://github.com/jakobhellermann/muffle",
     "sources": "https://github.com/jakobhellermann/muffle"
   },
-
   "license": "CC0-1.0",
   "icon": "assets/muffle/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -25,7 +22,6 @@
   "mixins": [
     "muffle.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
