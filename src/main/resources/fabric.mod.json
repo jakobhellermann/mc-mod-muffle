@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "muffle",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Muffle",
+  "description": "todo",
   "authors": [
-    "Me!"
+    "Jakob Hellermann"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/jakobhellermann/muffle",
+    "sources": "https://github.com/jakobhellermann/muffle"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/muffle/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "com.github.jakobhellermann.muffle.Muffle"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "muffle.mixins.json"
   ],
 
   "depends": {
