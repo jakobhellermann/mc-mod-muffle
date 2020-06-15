@@ -1,5 +1,6 @@
 package com.github.jakobhellermann.muffle.mixin;
 
+import com.github.jakobhellermann.muffle.Muffle;
 import com.github.jakobhellermann.muffle.blockentities.SoundMufflerBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -35,6 +36,8 @@ public abstract class ClientWorldSoundMixin extends World {
                     return distance < blockEntity.getRange();
                 })
                 .anyMatch(blockEntity -> blockEntity.isSoundBlocked(sound, category));
+
+        Muffle.recentSounds.addIfMissing(sound.getId().toString());
 
         if (blocked) {
             ci.cancel();
