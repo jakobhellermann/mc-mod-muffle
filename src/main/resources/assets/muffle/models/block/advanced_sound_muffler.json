@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "muffle:block/sound_muffler"
+    "all": "muffle:block/advanced_sound_muffler"
   }
 }

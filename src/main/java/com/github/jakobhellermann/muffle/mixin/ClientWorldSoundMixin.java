@@ -1,7 +1,7 @@
 package com.github.jakobhellermann.muffle.mixin;
 
 import com.github.jakobhellermann.muffle.Muffle;
-import com.github.jakobhellermann.muffle.blockentities.SoundMufflerBlockEntity;
+import com.github.jakobhellermann.muffle.logic.SoundBlocker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.world.ClientWorld;
@@ -29,11 +29,12 @@ public abstract class ClientWorldSoundMixin extends World {
     @Inject(at = @At("HEAD"), method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZ)V", cancellable = true)
     private void playSound(double x, double y, double z, SoundEvent sound, SoundCategory category, float volume, float pitch, boolean bl, CallbackInfo ci) {
         boolean blocked = this.blockEntities.stream()
-                .filter(blockEntity -> blockEntity instanceof SoundMufflerBlockEntity)
-                .map(blockEntity -> (SoundMufflerBlockEntity) blockEntity)
+                .filter(blockEntity -> blockEntity instanceof SoundBlocker)
+                .map(blockEntity -> (SoundBlocker) blockEntity)
                 .filter(blockEntity -> {
-                    double distance = blockEntity.getPos().getSquaredDistance(x, y, z, false);
-                    return distance < blockEntity.getRange();
+                    double distance = blockEntity.getPosition().getSquaredDistance(x, y, z, false);
+                    int range = blockEntity.getRange();
+                    return distance <= (range * range) + 1;
                 })
                 .anyMatch(blockEntity -> blockEntity.isSoundBlocked(sound, category));
 

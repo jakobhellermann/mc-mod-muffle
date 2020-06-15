@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "muffle:sound_muffler"
+          "name": "muffle:basic_sound_muffler"
         }
       ],
       "conditions": [

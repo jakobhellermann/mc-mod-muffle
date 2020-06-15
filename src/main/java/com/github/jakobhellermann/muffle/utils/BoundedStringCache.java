@@ -17,7 +17,7 @@ public class BoundedStringCache {
 
     public void add(String value) {
         this.items[currentIdx] = value;
-        currentIdx = currentIdx + 1 % this.items.length;
+        currentIdx = (currentIdx + 1) % this.items.length;
     }
 
     public boolean contains(String value) {

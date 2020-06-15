@@ -1,6 +1,7 @@
 package com.github.jakobhellermann.muffle.blockentities;
 
 import com.github.jakobhellermann.muffle.Muffle;
+import com.github.jakobhellermann.muffle.logic.SoundBlocker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -11,19 +12,16 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
-public class SoundMufflerBlockEntity extends BlockEntity {
+public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements SoundBlocker {
     private int range = 6;
     private final ArrayList<String> blocklist = new ArrayList<>();
 
-    public SoundMufflerBlockEntity() {
-        super(Muffle.SOUND_MUFFLER_ENTITY);
-    }
-
-    public int getRange() {
-        return range;
+    public AdvancedSoundMufflerBlockEntity() {
+        super(Muffle.ADVANCED_SOUND_MUFFLER_ENTITY);
     }
 
     public ArrayList<String> getBlocklist() {
@@ -43,21 +41,6 @@ public class SoundMufflerBlockEntity extends BlockEntity {
     public boolean removeBlockedSound(String id) {
         this.markDirty();
         return this.blocklist.remove(id);
-    }
-
-    @Environment(EnvType.CLIENT)
-    public boolean isSoundBlocked(SoundEvent sound, SoundCategory category) {
-        String id = sound.getId().toString();
-        boolean blocked = this.blocklist.contains(id);
-
-        System.out.println("playSound invoked: " + id + ", category: " + category.getName() + ", blocked: " + blocked);
-        return blocked;
-    }
-
-    @Override
-    public void markDirty() {
-        System.out.println("marked dirty");
-        super.markDirty();
     }
 
     @Override
@@ -83,4 +66,26 @@ public class SoundMufflerBlockEntity extends BlockEntity {
 
         super.fromTag(state, tag);
     }
+
+    // sound blocker impl
+
+    @Override
+    public BlockPos getPosition() {
+        return this.getPos();
+    }
+
+    @Override
+    public int getRange() {
+        return range;
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public boolean isSoundBlocked(SoundEvent sound, SoundCategory category) {
+        String id = sound.getId().toString();
+        boolean blocked = this.blocklist.contains(id);
+
+        return blocked;
+    }
+
 }
