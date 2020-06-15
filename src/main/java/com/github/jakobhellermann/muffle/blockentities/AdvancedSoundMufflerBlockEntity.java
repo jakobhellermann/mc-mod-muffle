@@ -43,6 +43,18 @@ public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements Soun
         return this.blocklist.remove(id);
     }
 
+    public boolean isBlocked(String id) {
+        return this.blocklist.stream().anyMatch(blocked -> blocked.startsWith(id));
+    }
+    public void setBlocked(String id, boolean value) {
+        markDirty();
+        if (value) {
+            this.blocklist.add(id);
+        } else {
+            this.blocklist.removeIf(i -> i.startsWith(id));
+        }
+    }
+
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);

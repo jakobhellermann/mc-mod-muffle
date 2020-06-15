@@ -2,6 +2,8 @@ package com.github.jakobhellermann.muffle.blocks;
 
 import com.github.jakobhellermann.muffle.Muffle;
 import com.github.jakobhellermann.muffle.blockentities.AdvancedSoundMufflerBlockEntity;
+import com.github.jakobhellermann.muffle.gui.SoundMufflerContainer;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.Blocks;
@@ -13,7 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
@@ -31,15 +33,21 @@ public class AdvancedSoundMuffler extends Block implements BlockEntityProvider {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        AdvancedSoundMufflerBlockEntity blockEntity = (AdvancedSoundMufflerBlockEntity) world.getBlockEntity(pos);
+        AdvancedSoundMufflerBlockEntity e = (AdvancedSoundMufflerBlockEntity) world.getBlockEntity(pos);
+        StringBuilder log = new StringBuilder("Blocklist: ");
+        for(String id : e.getBlocklist()) {
+            log.append(id);
+            log.append(", ");
+        }
+        System.out.println(log);
+        System.out.println("Range: " + e.getRange());
 
-        assert blockEntity != null;
-        System.out.println("Range: " + blockEntity.getRange());
-        blockEntity.setRange(blockEntity.getRange() + 1);
-
-        int size = Registry.SOUND_EVENT.getIds().size();
-        System.out.println("sound event reg size: " + size);
-
-        return super.onUse(state, world, pos, player, hand, hit);
+        if (!world.isClient) {
+            ContainerProviderRegistry.INSTANCE.openContainer(SoundMufflerContainer.ID, player, (buffer) -> {
+                buffer.writeText(new TranslatableText(this.getTranslationKey()));
+                buffer.writeBlockPos(pos);
+            });
+        }
+        return ActionResult.SUCCESS;
     }
 }

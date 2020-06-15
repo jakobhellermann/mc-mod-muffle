@@ -5,7 +5,11 @@ import com.github.jakobhellermann.muffle.blockentities.BasicSoundMufflerBlockEnt
 import com.github.jakobhellermann.muffle.blocks.AdvancedSoundMuffler;
 import com.github.jakobhellermann.muffle.blocks.BasicSoundMuffler;
 import com.github.jakobhellermann.muffle.utils.BoundedStringCache;
+import com.github.jakobhellermann.muffle.gui.SoundMufflerContainer;
+import com.github.jakobhellermann.muffle.gui.SoundMufflerContainerScreen;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
@@ -33,5 +37,8 @@ public class Muffle implements ModInitializer {
 
         BASIC_SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, BasicSoundMuffler.ID, BlockEntityType.Builder.create(BasicSoundMufflerBlockEntity::new, BASIC_SOUND_MUFFLER).build(null));
         ADVANCED_SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, AdvancedSoundMuffler.ID, BlockEntityType.Builder.create(AdvancedSoundMufflerBlockEntity::new, ADVANCED_SOUND_MUFFLER).build(null));
+
+        ContainerProviderRegistry.INSTANCE.registerFactory(SoundMufflerContainer.ID, (syncId, id, player, buf) -> new SoundMufflerContainer(syncId, buf.readText(), player.inventory, buf.readBlockPos()));
+        ScreenProviderRegistry.INSTANCE.registerFactory(SoundMufflerContainer.ID, SoundMufflerContainerScreen::new);
     }
 }
