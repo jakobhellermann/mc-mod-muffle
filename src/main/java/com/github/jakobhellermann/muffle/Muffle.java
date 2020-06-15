@@ -9,7 +9,6 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class Muffle implements ModInitializer {
@@ -20,9 +19,9 @@ public class Muffle implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "sound_muffler"), BlockEntityType.Builder.create(SoundMufflerBlockEntity::new, SOUND_MUFFLER).build(null));
+        Registry.register(Registry.BLOCK, SoundMuffler.ID, SOUND_MUFFLER);
+        Registry.register(Registry.ITEM, SoundMuffler.ID, new BlockItem(SOUND_MUFFLER, new Item.Settings().group(ItemGroup.MISC)));
 
-        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "sound_muffler"), SOUND_MUFFLER);
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "sound_muffler"), new BlockItem(SOUND_MUFFLER, new Item.Settings().group(ItemGroup.MISC)));
+        SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, SoundMuffler.ID, BlockEntityType.Builder.create(SoundMufflerBlockEntity::new, SOUND_MUFFLER).build(null));
     }
 }

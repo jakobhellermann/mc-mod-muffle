@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "muffle",
-  "version": "${version}",
+  "version": "0.1.0-alpha.0",
   "name": "Muffle",
   "description": "todo",
   "authors": [
