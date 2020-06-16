@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "muffle:block/sound_amplifier"
+    }
+  }
+}

@@ -1,4 +1,5 @@
 {
   "block.muffle.basic_sound_muffler": "Basic Sound Muffler",
-  "block.muffle.advanced_sound_muffler": "Advanced Sound Muffler"
+  "block.muffle.advanced_sound_muffler": "Advanced Sound Muffler",
+  "block.muffle.sound_amplifier": "Sound Amplifier"
 }

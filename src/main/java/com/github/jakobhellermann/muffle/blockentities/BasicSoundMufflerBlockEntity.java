@@ -15,11 +15,6 @@ public class BasicSoundMufflerBlockEntity extends BlockEntity implements SoundBl
     }
 
     @Override
-    public BlockPos getPosition() {
-        return this.getPos();
-    }
-
-    @Override
     public int getRange() {
         return BasicSoundMufflerBlockEntity.RANGE;
     }

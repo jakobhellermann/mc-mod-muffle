@@ -70,11 +70,6 @@ public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements Soun
     // sound blocker impl
 
     @Override
-    public BlockPos getPosition() {
-        return this.getPos();
-    }
-
-    @Override
     public int getRange() {
         return range;
     }
