@@ -25,13 +25,13 @@ public class Muffle implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        Registry.register(Registry.BLOCK, AdvancedSoundMuffler.ID, ADVANCED_SOUND_MUFFLER);
         Registry.register(Registry.BLOCK, BasicSoundMuffler.ID, BASIC_SOUND_MUFFLER);
+        Registry.register(Registry.BLOCK, AdvancedSoundMuffler.ID, ADVANCED_SOUND_MUFFLER);
 
-        Registry.register(Registry.ITEM, AdvancedSoundMuffler.ID, new BlockItem(ADVANCED_SOUND_MUFFLER, new Item.Settings().group(ItemGroup.MISC)));
         Registry.register(Registry.ITEM, BasicSoundMuffler.ID, new BlockItem(BASIC_SOUND_MUFFLER, new Item.Settings().group(ItemGroup.MISC)));
+        Registry.register(Registry.ITEM, AdvancedSoundMuffler.ID, new BlockItem(ADVANCED_SOUND_MUFFLER, new Item.Settings().group(ItemGroup.MISC)));
 
-        ADVANCED_SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, AdvancedSoundMuffler.ID, BlockEntityType.Builder.create(AdvancedSoundMufflerBlockEntity::new, ADVANCED_SOUND_MUFFLER).build(null));
         BASIC_SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, BasicSoundMuffler.ID, BlockEntityType.Builder.create(BasicSoundMufflerBlockEntity::new, BASIC_SOUND_MUFFLER).build(null));
+        ADVANCED_SOUND_MUFFLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, AdvancedSoundMuffler.ID, BlockEntityType.Builder.create(AdvancedSoundMufflerBlockEntity::new, ADVANCED_SOUND_MUFFLER).build(null));
     }
 }
