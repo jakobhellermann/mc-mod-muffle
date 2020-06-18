@@ -1,7 +1,12 @@
 package com.github.jakobhellermann.muffle.gui;
 
+import com.github.jakobhellermann.muffle.Muffle;
 import com.github.jakobhellermann.muffle.blockentities.AdvancedSoundMufflerBlockEntity;
+import com.github.jakobhellermann.muffle.blockentities.AdvancedSoundMufflerBlockEntity.MufflerPacketValueKind;
 import com.github.jakobhellermann.muffle.logic.SoundRegistry;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.network.PacketByteBuf;
 import spinnery.client.screen.BaseContainerScreen;
 import spinnery.widget.*;
 import spinnery.widget.api.Position;
@@ -13,6 +18,24 @@ public class SoundMufflerContainerScreen extends BaseContainerScreen<SoundMuffle
     AdvancedSoundMufflerBlockEntity blockEntity;
 
     String filter = null;
+
+    void setRange(int range) {
+        if (range == this.blockEntity.getRange()) return;
+
+        PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+        passedData.writeBlockPos(this.blockEntity.getPos());
+        passedData.writeEnumConstant(MufflerPacketValueKind.Range);
+        passedData.writeInt(range);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(Muffle.SET_MUFFLER_RANGE_PACKET_ID, passedData);
+    }
+    void setBlocked(String id, boolean value) {
+        PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+        passedData.writeBlockPos(this.blockEntity.getPos());
+        passedData.writeEnumConstant(MufflerPacketValueKind.Blocked);
+        passedData.writeString(id);
+        passedData.writeBoolean(value);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(Muffle.SET_MUFFLER_RANGE_PACKET_ID, passedData);
+    }
 
     WVerticalScrollableContainer createSoundsList(WPanel mainPanel) {
         WVerticalScrollableContainer soundsList = mainPanel.createChild(
@@ -27,10 +50,7 @@ public class SoundMufflerContainerScreen extends BaseContainerScreen<SoundMuffle
 
             WStaticText soundName = new WStaticText().setText(sound).setParent(soundsList);
             WToggle toggle = new WToggle().setToggleState(!this.blockEntity.isBlocked(sound)).setSize(Size.of(23.5f, 9)).setParent(soundsList);
-            toggle.setOnMouseClicked((w, x, y, btn) -> {
-                boolean value = ((WToggle) w).getToggleState();
-                this.blockEntity.setBlocked(sound, value);
-            });
+            toggle.setOnMouseReleased((w, x, y, btn) -> setBlocked(sound, ((WToggle) w).getToggleState()));
 
             soundsList.addRow(toggle, soundName);
         }
@@ -72,7 +92,7 @@ public class SoundMufflerContainerScreen extends BaseContainerScreen<SoundMuffle
                 .setMin(0).setMax(32).setProgress(this.blockEntity.getRange())
                 .setPosition(Position.of(mainPanel, 13 * 18, 8 * 18, 0))
                 .setSize(Size.of(4 * 18, 9));
-        rangeSlider.setOnProgressChange(w -> this.blockEntity.setRange((int) w.getProgress()));
+        rangeSlider.setOnProgressChange(w -> setRange((int) w.getProgress()));
 
         mainPanel.add(searchField, rangeText, rangeSlider);
     }

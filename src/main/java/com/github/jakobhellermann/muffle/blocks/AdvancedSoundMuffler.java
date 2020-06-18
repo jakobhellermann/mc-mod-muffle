@@ -34,13 +34,16 @@ public class AdvancedSoundMuffler extends Block implements BlockEntityProvider {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         AdvancedSoundMufflerBlockEntity e = (AdvancedSoundMufflerBlockEntity) world.getBlockEntity(pos);
-        StringBuilder log = new StringBuilder("Blocklist: ");
+        System.out.println();
+        System.out.println("Range: " + e.getRange());
+        StringBuilder log = new StringBuilder("Blocklist: (");
         for(String id : e.getBlocklist()) {
             log.append(id);
             log.append(", ");
         }
+        log.append(')');
         System.out.println(log);
-        System.out.println("Range: " + e.getRange());
+        System.out.println();
 
         if (!world.isClient) {
             ContainerProviderRegistry.INSTANCE.openContainer(SoundMufflerContainer.ID, player, (buffer) -> {

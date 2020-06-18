@@ -4,6 +4,7 @@ import com.github.jakobhellermann.muffle.Muffle;
 import com.github.jakobhellermann.muffle.logic.SoundBlocker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -16,7 +17,11 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
-public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements SoundBlocker {
+public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements SoundBlocker, BlockEntityClientSerializable {
+    public enum MufflerPacketValueKind {
+        Range, Blocked
+    }
+
     private int range = 6;
     private final ArrayList<String> blocklist = new ArrayList<>();
 
@@ -29,23 +34,15 @@ public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements Soun
     }
 
     public void setRange(int range) {
+        System.out.println("set range to " + range);
         this.markDirty();
         this.range = range;
-    }
-
-    public boolean addBlockedSound(String id) {
-        this.markDirty();
-        return this.blocklist.add(id);
-    }
-
-    public boolean removeBlockedSound(String id) {
-        this.markDirty();
-        return this.blocklist.remove(id);
     }
 
     public boolean isBlocked(String id) {
         return this.blocklist.stream().anyMatch(blocked -> blocked.startsWith(id));
     }
+
     public void setBlocked(String id, boolean value) {
         markDirty();
         if (value) {
@@ -57,6 +54,7 @@ public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements Soun
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
+        System.out.println("toTag with range=" + this.range);
         super.toTag(tag);
 
         tag.putInt("range", this.range);
@@ -70,6 +68,7 @@ public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements Soun
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
+        System.out.println("fromTag with range=" + tag.getInt("range"));
         super.fromTag(state, tag);
         this.range = tag.getInt("range");
         for (Tag t : tag.getList("blocklist", 8)) {
@@ -77,6 +76,16 @@ public class AdvancedSoundMufflerBlockEntity extends BlockEntity implements Soun
         }
 
         super.fromTag(state, tag);
+    }
+
+    @Override
+    public void fromClientTag(CompoundTag compoundTag) {
+        this.fromTag(null, compoundTag);
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag compoundTag) {
+        return this.toTag(compoundTag);
     }
 
     // sound blocker impl
