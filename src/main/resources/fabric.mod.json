@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "muffle",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0",
   "name": "Muffle",
-  "description": "todo",
+  "description": "Adds a Sound Muffler, which muffles nearby sounds.",
   "authors": [
     "Jakob Hellermann"
   ],
@@ -11,7 +11,7 @@
     "homepage": "https://github.com/jakobhellermann/muffle",
     "sources": "https://github.com/jakobhellermann/muffle"
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/muffle/icon.png",
   "environment": "*",
   "entrypoints": {
