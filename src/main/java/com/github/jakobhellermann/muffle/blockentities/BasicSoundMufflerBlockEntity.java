@@ -8,7 +8,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 
 public class BasicSoundMufflerBlockEntity extends BlockEntity implements SoundBlocker {
-    public static int RANGE = 5;
+    public static int RANGE = 6;
 
     public BasicSoundMufflerBlockEntity() {
         super(Muffle.BASIC_SOUND_MUFFLER_ENTITY);
