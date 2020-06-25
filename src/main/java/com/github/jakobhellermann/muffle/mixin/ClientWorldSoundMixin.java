@@ -38,7 +38,7 @@ public abstract class ClientWorldSoundMixin extends World {
                 })
                 .anyMatch(blockEntity -> blockEntity.isSoundBlocked(sound, category));
 
-        Muffle.recentSounds.addIfMissing(sound.getId().toString());
+        // Muffle.recentSounds.addIfMissing(sound.getId().toString());
 
         if (blocked) {
             ci.cancel();
