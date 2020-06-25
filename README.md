@@ -2,6 +2,8 @@
 
 > A minecraft mod which adds the Sound Muffler, a block which mutes nearby sounds.
 
+![Banner for Muffle](muffle.png)
+
 ## Future possibilities
 
 - An extended version of the sound muffler, which allows for selectively muting some sounds or changing the range.
